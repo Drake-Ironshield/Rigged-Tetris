@@ -50,12 +50,19 @@ public class UI : MonoBehaviour
             if (i != nextBlocks.Length - 1)
             {
                 nextBlockNames[i] = nextBlockNames[i + 1];
-                SetHeldBlock(nextBlockNames[i] , i);
+                Debug.Log(i);
+                //Vector3 pastPosition = nextBlockObjects[i].GetComponent<Transform>().position;
+                nextBlockObjects[i] = nextBlockObjects[i + 1];
+                //nextBlockObjects[i].GetComponent<Transform>().position = pastPosition;
             }
             else
             {
                 nextBlockNames[i] = creatorScript.spawnBlock();
                 SetHeldBlock(nextBlockNames[i] , i);
+            }
+            if (i == 0)
+            {
+                Destroy(nextBlockObjects[i]);
             }
         }
     }
