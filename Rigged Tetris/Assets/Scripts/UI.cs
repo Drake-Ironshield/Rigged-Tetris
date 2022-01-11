@@ -13,10 +13,23 @@ public class UI : MonoBehaviour
     public GameObject invertedDiagPiece;
     public GameObject heldBlockArea;
     GameObject currentHeldBlock;
+    public GameObject[] nextBlocks;
+    GameObject[] nextBlockObjects;
+    string[] nextBlockNames;
+    public GameObject segmentCreatorObject;
+    segmentCreator creatorScript;
 
     // Start is called before the first frame update
     void Start()
     {
+        nextBlockObjects = new GameObject[nextBlocks.Length];
+        nextBlockNames = new string[nextBlocks.Length];
+        creatorScript = segmentCreatorObject.GetComponent<segmentCreator>();
+        for (int i = 0; i < nextBlocks.Length; i++)
+        {
+            nextBlockNames[i] = creatorScript.spawnBlock();
+            SetHeldBlock(nextBlockNames[i] , i);
+        }
         
     }
 
@@ -26,11 +39,36 @@ public class UI : MonoBehaviour
         
     }
 
-    public void SetHeldBlock(string blockName)
+    public void shiftNextBlocks()
     {
-        if (currentHeldBlock != null)
+        for (int i = 0; i < nextBlocks.Length; i++)
+        {
+            if (i == 0)
+            {
+                creatorScript.SpawnSpecificBlock(nextBlockNames[i]);
+            }
+            if (i != nextBlocks.Length - 1)
+            {
+                nextBlockNames[i] = nextBlockNames[i + 1];
+                SetHeldBlock(nextBlockNames[i] , i);
+            }
+            else
+            {
+                nextBlockNames[i] = creatorScript.spawnBlock();
+                SetHeldBlock(nextBlockNames[i] , i);
+            }
+        }
+    }
+
+    public void SetHeldBlock(string blockName, int slot)
+    {
+        if (slot == -1 && currentHeldBlock != null)
         {
             Destroy(currentHeldBlock);
+        }
+        if (slot != -1 && nextBlockObjects[slot] != null)
+        {
+            Destroy(nextBlockObjects[slot]);
         }
         GameObject targetBlock;
         switch (blockName)
@@ -59,7 +97,15 @@ public class UI : MonoBehaviour
             default: Debug.Log("Something went wrong when setting the held block");
                 return;
         }
-        currentHeldBlock = Instantiate(targetBlock, heldBlockArea.GetComponent<Transform>());
+        if (slot == -1)
+        {
+            currentHeldBlock = Instantiate(targetBlock, heldBlockArea.GetComponent<Transform>());
+        }
+        else
+        {
+            nextBlockObjects[slot] = Instantiate(targetBlock , nextBlocks[slot].GetComponent<Transform>());
+        }
+        
     }
 
 }

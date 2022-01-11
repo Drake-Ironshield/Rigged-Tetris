@@ -23,7 +23,7 @@ MonoBehaviour:
   m_MinSize: {x: 613, y: 472}
   m_MaxSize: {x: 18008, y: 14044}
   vertical: 1
-  controlID: 329
+  controlID: 325
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_MinSize: {x: 613, y: 472}
   m_MaxSize: {x: 18008, y: 14044}
   vertical: 0
-  controlID: 330
+  controlID: 326
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_MinSize: {x: 336, y: 472}
   m_MaxSize: {x: 14006, y: 14044}
   vertical: 1
-  controlID: 292
+  controlID: 288
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_MinSize: {x: 304, y: 200}
   m_MaxSize: {x: 8004, y: 4022}
   vertical: 0
-  controlID: 227
+  controlID: 225
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -237,7 +237,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 72fbffffda310000ee310000
+      m_ExpandedIDs: 72fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -381,7 +381,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_ShowGlobalGrid: 0
+  m_ShowGlobalGrid: 1
   m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_MinSize: {x: 336, y: 272}
   m_MaxSize: {x: 14006, y: 10022}
   vertical: 0
-  controlID: 293
+  controlID: 289
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -569,19 +569,19 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: E:\Bad Tetris Master\Rigged Tetris
+  m_LastProjectPath: E:\Bad Tetris Master\Rigged-Tetris\Rigged Tetris
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 08300000
-    m_LastClickedID: 12296
+    m_SelectedIDs: 502d0000
+    m_LastClickedID: 11600
     m_ExpandedIDs: 00000000502d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -635,9 +635,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 02320000
-    m_LastClickedInstanceID: 12802
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000825700001a350000543500000a3100009a2f0000f0310000002f0000923300003a31000058330000f02f0000de3b0000b23100009e300000b43100005c2f0000b23f0000a63f0000563300006234000068340000862f000010330000ce310000142f0000663200005e3200007e300000202f0000ae300000945300009e3200000000000012350000d8360000762d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -780,5 +780,5 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
-  m_LastInspectedObjectInstanceID: 12802
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0

@@ -31,8 +31,6 @@ public class tileManager : MonoBehaviour
     segmentCreator creator;
     bool hasHeld;
 
-    // add in 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -143,7 +141,7 @@ public class tileManager : MonoBehaviour
                     gravityBlocks[i,j] = false;
                 }
             }
-            UIscript.SetHeldBlock(creator.CurrentBlock);
+            UIscript.SetHeldBlock(creator.CurrentBlock , -1);
             creator.CurrentHeldBlock = creator.CurrentBlock;
             if (creator.HoldingItem)
             {
@@ -168,7 +166,7 @@ public class tileManager : MonoBehaviour
             timer = 0;
             if (!tileSpawner.GetComponent<segmentCreator>().BlockFalling)
             {
-                tileSpawner.GetComponent<segmentCreator>().spawnBlock();
+                UIscript.shiftNextBlocks();
             }
         }
     }

@@ -104,14 +104,8 @@ public class segmentCreator : MonoBehaviour
 
     }
 
-    public void spawnBlock()
+    public string spawnBlock()
     {
-        if (blockFalling)
-        {
-            return;
-        }
-        int arraySize;
-        bool[,] selectedBlock;
         // bag selection
         for (int i = 0; i < 7; i++)
         {
@@ -153,72 +147,24 @@ public class segmentCreator : MonoBehaviour
         switch (blockType)
         {
             case 0:
-                arraySize = 2;
-                selectedBlock = squarePiece;
-                currentPieceColor = Color.yellow;
-                currentBlock = "square";
-                break;
+                return "square";
             case 1:
-                arraySize = 3;
-                selectedBlock = tPiece;
-                currentPieceColor = Color.magenta;
-                currentBlock = "TPiece";
-                break;
+                return "TPiece";
             case 2:
-                arraySize = 4;
-                selectedBlock = linePiece;
-                currentPieceColor = Color.cyan;
-                currentBlock = "LinePiece";
-                break;
+                return "LinePiece";
             case 3:
-                arraySize = 3;
-                selectedBlock = lPiece;
-                currentPieceColor = Color.blue;
-                currentBlock = "LPiece";
-                break;
+                return "LPiece";
             case 4:
-                arraySize = 3;
-                selectedBlock = inverseLPiece;
-                currentPieceColor = new Color(1.0f, 0.647f, 0.0f);
-                currentBlock = "InvertedLPiece";
-                break;
+                return "InvertedLPiece";
             case 5:
-                arraySize = 3;
-                selectedBlock = diagPiece;
-                currentPieceColor = Color.red;
-                currentBlock = "diagPiece";
-                break;
+                return "diagPiece";
             case 6:
-                arraySize = 3;
-                selectedBlock = inverseDiagPiece;
-                currentPieceColor = Color.green;
-                currentBlock = "invertedDiagPiece";
-                break;
+                return "invertedDiagPiece";
             default: 
-                arraySize = 2;
-                selectedBlock = squarePiece;
-                currentPieceColor = Color.white;
-                currentBlock = "square";
                 Debug.Log("Something went wrong in spawnBlock");
-                break;
+                return "square";
         }
-        int[] offset = new int[2] {0,0};
-        if (arraySize == 4)
-        {
-            offset[0] = 1;
-        }
-        for (int i = 0; i < arraySize; i++)
-        {
-            for (int j = 0; j < arraySize; j++)
-            {
-                tileManagerScript.GravityBlocks[spawnX + i - offset[0] , spawnY + j - offset[1]] = selectedBlock[j,i];
-            }
-        }
-        blockFalling = true;
-        currentPieceSize = arraySize;
-        currentPieceCoord[0] = spawnX - offset[0];
-        currentPieceCoord[1] = spawnY - offset[1];
-        tileManagerScript.showBlocks();
+
     }
 
     public void SpawnSpecificBlock(string blockName)
