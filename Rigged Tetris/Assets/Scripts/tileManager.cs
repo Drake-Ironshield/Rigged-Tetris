@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class tileManager : MonoBehaviour
 {
@@ -31,9 +32,11 @@ public class tileManager : MonoBehaviour
     segmentCreator creator;
     bool hasHeld;
 
+    bool isGameOver;
     // Start is called before the first frame update
     void Start()
     {
+        isGameOver = false;
         hasHeld = false;
         UIscript = UIObject.GetComponent<UI>();
         creator = tileSpawner.GetComponent<segmentCreator>();
@@ -60,6 +63,19 @@ public class tileManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        if (isGameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Scene scene = SceneManager.GetActiveScene();
+                SceneManager.LoadScene(scene.name);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         // Down Arrow Pressed
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -123,7 +139,7 @@ public class tileManager : MonoBehaviour
             {
                 this.shift();
             }
-            tileSpawner.GetComponent<segmentCreator>().spawnBlock();
+            UIscript.shiftNextBlocks();
         }
         // Z Pressed
         if (Input.GetKeyDown(KeyCode.Z))
@@ -325,6 +341,7 @@ public class tileManager : MonoBehaviour
         if (place == true)
         {
             this.checkTetris();
+            this.checkFail();
             hasHeld = false;
         }
         if (creator.BlockFalling)
@@ -454,5 +471,17 @@ public class tileManager : MonoBehaviour
             Debug.Log("reverting Change");
         }
         this.showBlocks();
+    }
+
+    public void checkFail()
+    {
+        for (int i = 0; i < areaWidth; i++)
+        {
+            if (stableBlocks[i , 20])
+            {
+                UIscript.gameOverObject.SetActive(true);
+                isGameOver = true;
+            }
+        }
     }
 }

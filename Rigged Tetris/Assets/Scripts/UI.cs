@@ -18,10 +18,12 @@ public class UI : MonoBehaviour
     string[] nextBlockNames;
     public GameObject segmentCreatorObject;
     segmentCreator creatorScript;
+    public GameObject gameOverObject;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameOverObject.SetActive(false);
         nextBlockObjects = new GameObject[nextBlocks.Length];
         nextBlockNames = new string[nextBlocks.Length];
         creatorScript = segmentCreatorObject.GetComponent<segmentCreator>();
@@ -41,30 +43,27 @@ public class UI : MonoBehaviour
 
     public void shiftNextBlocks()
     {
+        GameObject spawnedObject = null;
         for (int i = 0; i < nextBlocks.Length; i++)
         {
             if (i == 0)
             {
+                spawnedObject = nextBlockObjects[i];
                 creatorScript.SpawnSpecificBlock(nextBlockNames[i]);
             }
             if (i != nextBlocks.Length - 1)
             {
                 nextBlockNames[i] = nextBlockNames[i + 1];
-                Debug.Log(i);
-                //Vector3 pastPosition = nextBlockObjects[i].GetComponent<Transform>().position;
                 nextBlockObjects[i] = nextBlockObjects[i + 1];
-                //nextBlockObjects[i].GetComponent<Transform>().position = pastPosition;
+                nextBlockObjects[i].GetComponent<Transform>().position = nextBlocks[i].GetComponent<Transform>().position;
             }
             else
             {
                 nextBlockNames[i] = creatorScript.spawnBlock();
                 SetHeldBlock(nextBlockNames[i] , i);
             }
-            if (i == 0)
-            {
-                Destroy(nextBlockObjects[i]);
-            }
         }
+        Destroy(spawnedObject);
     }
 
     public void SetHeldBlock(string blockName, int slot)
@@ -72,10 +71,6 @@ public class UI : MonoBehaviour
         if (slot == -1 && currentHeldBlock != null)
         {
             Destroy(currentHeldBlock);
-        }
-        if (slot != -1 && nextBlockObjects[slot] != null)
-        {
-            Destroy(nextBlockObjects[slot]);
         }
         GameObject targetBlock;
         switch (blockName)
