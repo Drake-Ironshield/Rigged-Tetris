@@ -24,6 +24,7 @@ public class UI : MonoBehaviour
     int level;
     public GameObject[] textObjects;
     Text[] textScripts;
+    public GameObject scoreObject;
 
     // Start is called before the first frame update
     void Start()
@@ -148,13 +149,22 @@ public class UI : MonoBehaviour
                 break;
         }
         baseScore = baseScore * (level + 1);
+        Vector3 newPos = new Vector3(-13.74f, -2.72f, 0f);
+        GameObject score = Instantiate(scoreObject , newPos, Quaternion.identity);
+        score.GetComponent<scoreObject>().startUp(baseScore);
         totalScore = totalScore + baseScore;
         this.configureScore();
     }
 
     public void configureScore()
     {
-
+        string scoreString = totalScore.ToString();
+        char[] scoreArray = scoreString.ToCharArray();
+        char[] flippedArray = new char[scoreArray.Length];
+        for (int i = 0; i < scoreArray.Length; i++)
+        {
+            textScripts[i].text = scoreArray[scoreArray.Length - 1 - i].ToString();
+        }
     }
 
 }
