@@ -354,6 +354,7 @@ public class tileManager : MonoBehaviour
     public void checkTetris()
     {
         //finding the tetris
+        int tetrisAmount = 0;
         bool[] isTetris = new bool[areaHeight];
         bool checkTetris = true;
         for (int i = 0; i < areaHeight; i++)
@@ -368,9 +369,15 @@ public class tileManager : MonoBehaviour
             if (checkTetris == true)
             {
                 isTetris[i] = true;
+                tetrisAmount++;
             }
             checkTetris = true;
         }
+        if (tetrisAmount == 0)
+        {
+            return;
+        }
+        UIscript.addScore(tetrisAmount);
         // dealing with the tetris
         for (int i = 0; i < areaHeight; i++)
         {

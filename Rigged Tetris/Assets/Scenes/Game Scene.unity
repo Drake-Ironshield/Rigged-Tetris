@@ -846,6 +846,14 @@ MonoBehaviour:
   - {fileID: 2139043957}
   segmentCreatorObject: {fileID: 581033272}
   gameOverObject: {fileID: 520146111}
+  textObjects:
+  - {fileID: 239394161}
+  - {fileID: 1599049222}
+  - {fileID: 866117467}
+  - {fileID: 1305874066}
+  - {fileID: 1016508542}
+  - {fileID: 841942679}
+  - {fileID: 1634035319}
 --- !u!1 &841942679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1855,7 +1863,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.33, y: 0.88338196}
   m_AnchorMax: {x: 0.33, y: 0.88338196}
-  m_AnchoredPosition: {x: 25, y: -22.539978}
+  m_AnchoredPosition: {x: 25, y: -22.54004}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1654401212

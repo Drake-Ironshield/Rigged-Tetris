@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
@@ -19,10 +20,21 @@ public class UI : MonoBehaviour
     public GameObject segmentCreatorObject;
     segmentCreator creatorScript;
     public GameObject gameOverObject;
+    int totalScore;
+    int level;
+    public GameObject[] textObjects;
+    Text[] textScripts;
 
     // Start is called before the first frame update
     void Start()
     {
+        textScripts = new Text[textObjects.Length];
+        for (int i = 0; i < textObjects.Length; i++)
+        {
+            textScripts[i] = textObjects[i].GetComponent<Text>();
+        }
+        totalScore = 0;
+        level = 0;
         gameOverObject.SetActive(false);
         nextBlockObjects = new GameObject[nextBlocks.Length];
         nextBlockNames = new string[nextBlocks.Length];
@@ -108,6 +120,41 @@ public class UI : MonoBehaviour
             nextBlockObjects[slot] = Instantiate(targetBlock , nextBlocks[slot].GetComponent<Transform>());
         }
         
+    }
+
+     public void addScore(int tetrisNumber)
+    {
+        int baseScore;
+        switch (tetrisNumber)
+        {
+            case 1:
+                baseScore = 40;
+                break;
+            case 2:
+                baseScore = 100;
+                break;
+            case 3:
+                baseScore = 300;
+                break;
+            case 4:
+                baseScore = 1200;
+                break;
+            case 5:
+                baseScore = -1200;
+                break;
+            default:
+                baseScore = 0;
+                Debug.Log("Tetris count not found");
+                break;
+        }
+        baseScore = baseScore * (level + 1);
+        totalScore = totalScore + baseScore;
+        this.configureScore();
+    }
+
+    public void configureScore()
+    {
+
     }
 
 }
