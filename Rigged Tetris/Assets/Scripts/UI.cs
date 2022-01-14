@@ -21,15 +21,26 @@ public class UI : MonoBehaviour
     segmentCreator creatorScript;
     public GameObject gameOverObject;
     int totalScore;
-    int level;
     public GameObject[] textObjects;
     Text[] textScripts;
     public GameObject scoreObject;
+    public int blocksToLevelUp;
+    public GameObject levelText;
+    Text levelTextScript;
+    public GameObject blockText;
+    Text blockTextScript;
+    public GameObject manager;
+    tileManager managerScript;
+    int level;
+    int currentBlockAmount;
 
     // Start is called before the first frame update
     void Start()
     {
         textScripts = new Text[textObjects.Length];
+        levelTextScript = levelText.GetComponent<Text>();
+        blockTextScript = blockText.GetComponent<Text>();
+        managerScript = manager.GetComponent<tileManager>();
         for (int i = 0; i < textObjects.Length; i++)
         {
             textScripts[i] = textObjects[i].GetComponent<Text>();
@@ -45,7 +56,9 @@ public class UI : MonoBehaviour
             nextBlockNames[i] = creatorScript.spawnBlock();
             SetHeldBlock(nextBlockNames[i] , i);
         }
-        
+        level = 0;
+        currentBlockAmount = 0;
+        this.checkLevelUp();
     }
 
     // Update is called once per frame
@@ -126,6 +139,7 @@ public class UI : MonoBehaviour
      public void addScore(int tetrisNumber, float cellPos)
     {
         int baseScore;
+        currentBlockAmount = currentBlockAmount + tetrisNumber;
         switch (tetrisNumber)
         {
             case 1:
@@ -154,6 +168,7 @@ public class UI : MonoBehaviour
         score.GetComponent<scoreObject>().startUp(baseScore);
         totalScore = totalScore + baseScore;
         this.configureScore();
+        this.checkLevelUp();
     }
 
     public void configureScore()
@@ -167,4 +182,16 @@ public class UI : MonoBehaviour
         }
     }
 
+    public void checkLevelUp()
+    {
+        if (currentBlockAmount >= blocksToLevelUp)
+        {
+            currentBlockAmount = currentBlockAmount - blocksToLevelUp;
+            level++;
+            managerScript.shiftTime = managerScript.shiftTime - managerScript.levelSpeedUp;
+            levelTextScript.text = level.ToString();
+        }
+        int blockTextInt = blocksToLevelUp - currentBlockAmount;
+        blockTextScript.text = blockTextInt.ToString();
+    }
 }

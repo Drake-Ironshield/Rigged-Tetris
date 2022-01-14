@@ -31,6 +31,7 @@ public class tileManager : MonoBehaviour
     public GameObject tileSpawner;
     segmentCreator creator;
     bool hasHeld;
+    public float levelSpeedUp;
 
     bool isGameOver;
     // Start is called before the first frame update
