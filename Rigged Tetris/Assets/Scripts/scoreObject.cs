@@ -8,6 +8,7 @@ public class scoreObject : MonoBehaviour
     public float upSpeed;
     public float maxTime;
     public float flashTime;
+    float flashTimer;
     float currentTime;
     Transform trans;
     public GameObject textObject;
@@ -15,6 +16,7 @@ public class scoreObject : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        flashTimer = 0;
         trans = GetComponent<Transform>();
         textScript = textObject.GetComponent<Text>();
         currentTime = 0;
@@ -23,15 +25,20 @@ public class scoreObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("triggered");
         Vector2 pos = trans.position;
         pos.y = pos.y + upSpeed * Time.deltaTime;
         trans.position = pos;
         currentTime = currentTime + Time.deltaTime;
-        Debug.Log(currentTime);
+        flashTimer = flashTimer + Time.deltaTime;
         if (currentTime >= maxTime)
         {
             Destroy(gameObject);
+        }
+        if (flashTimer >= flashTime)
+        {
+            this.changeColor();
+            flashTimer = 0;
+
         }
     }
 
@@ -48,5 +55,43 @@ public class scoreObject : MonoBehaviour
         }
         string finalProduct = sign + score.ToString();
         textScript.text = finalProduct;
+    }
+
+    public void changeColor()
+    {
+        int colorType = Random.Range(0 , 8);
+        switch (colorType)
+        {
+            case 0:
+                textScript.color = Color.black;
+                break;
+            case 1:
+                textScript.color = Color.blue;
+                break;
+            case 2:
+                textScript.color = Color.cyan;
+                break;
+            case 3:
+                textScript.color = Color.gray;
+                break;
+            case 4:
+                textScript.color = Color.green;
+                break;
+            case 5:
+                textScript.color = Color.magenta;
+                break;
+            case 6:
+                textScript.color = Color.red;
+                break;
+            case 7:
+                textScript.color = Color.white;
+                break;
+            case 8:
+                textScript.color = Color.yellow;
+                break;
+            default:
+                Debug.Log("Something went wrong in color change: " + colorType);
+                break;
+        } 
     }
 }

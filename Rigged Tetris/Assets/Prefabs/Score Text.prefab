@@ -222,5 +222,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upSpeed: 1
   maxTime: 1
-  flashTime: 0
+  flashTime: 0.05
   textObject: {fileID: 5438054968746023211}

@@ -123,7 +123,7 @@ public class UI : MonoBehaviour
         
     }
 
-     public void addScore(int tetrisNumber)
+     public void addScore(int tetrisNumber, float cellPos)
     {
         int baseScore;
         switch (tetrisNumber)
@@ -149,7 +149,7 @@ public class UI : MonoBehaviour
                 break;
         }
         baseScore = baseScore * (level + 1);
-        Vector3 newPos = new Vector3(-13.74f, -2.72f, 0f);
+        Vector3 newPos = new Vector3(-13, cellPos, 0f);
         GameObject score = Instantiate(scoreObject , newPos, Quaternion.identity);
         score.GetComponent<scoreObject>().startUp(baseScore);
         totalScore = totalScore + baseScore;
