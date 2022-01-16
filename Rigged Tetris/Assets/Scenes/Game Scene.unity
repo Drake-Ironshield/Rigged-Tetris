@@ -694,8 +694,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.5, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.5, z: -710.64557}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14477,8 +14477,8 @@ MonoBehaviour:
   areaWidth: 10
   areaHeight: 20
   shiftTime: 0.5
-  bottemLeftX: -5.5
-  bottemLeftY: -6.5
+  bottemLeftX: -4.5
+  bottemLeftY: -5.5
   controlTickRate: 0.1
   controlOffset: 0.05
   emptySpot: {fileID: 11400000, guid: e1bd5cfd5cedbd9498a1d55abe708acc, type: 2}
@@ -14486,6 +14486,8 @@ MonoBehaviour:
   UIObject: {fileID: 726589439}
   tileSpawner: {fileID: 581033272}
   levelSpeedUp: 0.025
+  ghostPrefab: {fileID: 512263580086385897, guid: 2054923e5726ea44298e6cfa9b5a876f,
+    type: 3}
 --- !u!1 &2139043957
 GameObject:
   m_ObjectHideFlags: 0

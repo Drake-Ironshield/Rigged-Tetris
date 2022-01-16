@@ -32,11 +32,14 @@ public class tileManager : MonoBehaviour
     segmentCreator creator;
     bool hasHeld;
     public float levelSpeedUp;
+    public GameObject ghostPrefab;
+    GameObject[] ghostBlocks;
 
     bool isGameOver;
     // Start is called before the first frame update
     void Start()
     {
+        ghostBlocks = new GameObject[0];
         isGameOver = false;
         hasHeld = false;
         UIscript = UIObject.GetComponent<UI>();
@@ -163,6 +166,7 @@ public class tileManager : MonoBehaviour
             if (creator.HoldingItem)
             {
                 creator.SpawnSpecificBlock(heldBlock);
+                this.updateGhost();
             }
             else
             {
@@ -194,7 +198,7 @@ public class tileManager : MonoBehaviour
         {
             for (int j = 0; j < areaWidth; j++)
             {
-                Vector3Int tileSpot = new Vector3Int((int)bottemLeftX + j, (int)bottemLeftY + i, 0);
+                Vector3Int tileSpot = new Vector3Int((int)bottemLeftX + j - 1, (int)bottemLeftY + i - 1, 0); // Doesn't work without the minus one, I do not know why...
                 if (stableBlocks[j , i] == true || gravityBlocks[j , i] == true)
                 {
                     map.SetTile(tileSpot, filledSpot);
@@ -249,6 +253,7 @@ public class tileManager : MonoBehaviour
             gravityBlocks = revert;
         }
         creator.CurrentPieceCoord[0]++;
+        this.updateGhost();
         this.showBlocks();
     }
 
@@ -286,6 +291,7 @@ public class tileManager : MonoBehaviour
             gravityBlocks = revert;
         }
         creator.CurrentPieceCoord[0]--;
+        this.updateGhost();
         this.showBlocks();
     }
 
@@ -483,7 +489,92 @@ public class tileManager : MonoBehaviour
             gravityBlocks = revert;
             Debug.Log("reverting Change");
         }
+        this.updateGhost();
         this.showBlocks();
+    }
+
+    public void updateGhost() //needs to detect if there are already ghost blocks working, and if there are repurpose them and get rid of the excess.
+    {
+        if (!creator.BlockFalling)
+        {
+            for (int i = 0; i < ghostBlocks.Length; i++)
+            {
+                ghostBlocks[i].SetActive(false);
+            }
+            return;
+        }
+        if (ghostBlocks.Length > creator.NumberOfBlocks)
+        {
+            for (int i = creator.NumberOfBlocks - 1; i < ghostBlocks.Length; i++)
+            {
+                Destroy(ghostBlocks[i]);
+                ghostBlocks[i] = null;
+            }
+            
+        }
+        if (ghostBlocks.Length != creator.NumberOfBlocks)
+        {
+            GameObject[] newArray = new GameObject[creator.NumberOfBlocks];
+            for (int i = 0; i < ghostBlocks.Length; i++)
+            {
+                newArray[i] = ghostBlocks[i];
+                if (ghostBlocks[i] != null)
+                {
+                    ghostBlocks[i].SetActive(false);
+                }
+            }
+            ghostBlocks = newArray;
+        }
+        int fakeDistance = 0;
+        int distance = 20;
+        int amountOfBlocks = 0;
+        float[ , ] blockPositions = new float[creator.NumberOfBlocks, 2];
+        for (int i = 0; i < areaHeight; i++)
+        {
+            for (int j = 0; j < areaWidth; j++)
+            {
+                if (gravityBlocks[j , i] == true)
+                {
+                    blockPositions[amountOfBlocks , 0] = j + bottemLeftX;
+                    blockPositions[amountOfBlocks , 1] = i + bottemLeftY;
+                    amountOfBlocks++;
+                    for (int k = i - 1; k >= 0; k--)
+                    {
+                        if (stableBlocks[j , k] != true)
+                        {
+                            fakeDistance++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (fakeDistance < distance)
+                    {
+                        distance = fakeDistance;
+                    }
+                    Debug.Log(fakeDistance);
+                    fakeDistance = 0;
+                }
+            }
+        }
+        for (int i = 0; i < creator.NumberOfBlocks; i++)
+        {   
+            if (ghostBlocks[i] == null)
+            {
+                ghostBlocks[i] = Instantiate(ghostPrefab);
+            }
+            Vector3 newPosition = ghostBlocks[i].GetComponent<Transform>().position;
+            newPosition.y = blockPositions[i , 1] - distance;
+            newPosition.x = blockPositions[i , 0];
+            Color newColor = creator.CurrentPieceColor;
+            newColor.a = 0.25f;
+            ghostBlocks[i].GetComponent<SpriteRenderer>().color = newColor;
+            Debug.Log(distance + " " + newPosition.y + " " + newPosition.x);
+            ghostBlocks[i].SetActive(true);
+            ghostBlocks[i].GetComponent<Transform>().position = newPosition;
+        }
+
     }
 
     public void checkFail()

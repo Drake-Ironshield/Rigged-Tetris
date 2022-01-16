@@ -24,6 +24,8 @@ public class segmentCreator : MonoBehaviour
     public int[] CurrentPieceCoord {get {return currentPieceCoord;} set {currentPieceCoord = value;}}
     Color currentPieceColor;
     public Color CurrentPieceColor {get {return currentPieceColor;} set {currentPieceColor = value;}}
+    int numberOfBlocks;
+    public int NumberOfBlocks {get {return numberOfBlocks;}}
 
     bool holdingItem;
     public bool HoldingItem {get {return holdingItem;} set {holdingItem = value;}}
@@ -175,48 +177,56 @@ public class segmentCreator : MonoBehaviour
         {
             case "square":
                 arraySize = 2;
+                numberOfBlocks = 4;
                 selectedBlock = squarePiece;
                 currentPieceColor = Color.yellow;
                 currentBlock = "square";
                 break;
             case "TPiece":
                 arraySize = 3;
+                numberOfBlocks = 4;
                 selectedBlock = tPiece;
                 currentPieceColor = Color.magenta;
                 currentBlock = "TPiece";
                 break;
             case "LinePiece":
                 arraySize = 4;
+                numberOfBlocks = 4;
                 selectedBlock = linePiece;
                 currentPieceColor = Color.cyan;
                 currentBlock = "LinePiece";
                 break;
             case "LPiece":
                 arraySize = 3;
+                numberOfBlocks = 4;
                 selectedBlock = lPiece;
                 currentPieceColor = Color.blue;
                 currentBlock = "LPiece";
                 break;
             case "InvertedLPiece":
                 arraySize = 3;
+                numberOfBlocks = 4;
                 selectedBlock = inverseLPiece;
                 currentPieceColor = new Color(1.0f, 0.647f, 0.0f);
                 currentBlock = "InvertedLPiece";
                 break;
             case "diagPiece":
                 arraySize = 3;
+                numberOfBlocks = 4;
                 selectedBlock = diagPiece;
                 currentPieceColor = Color.red;
                 currentBlock = "diagPiece";
                 break;
             case "invertedDiagPiece":
                 arraySize = 3;
+                numberOfBlocks = 4;
                 selectedBlock = inverseDiagPiece;
                 currentPieceColor = Color.green;
                 currentBlock = "invertedDiagPiece";
                 break;
             default: 
                 arraySize = 2;
+                numberOfBlocks = 4;
                 selectedBlock = squarePiece;
                 currentPieceColor = Color.white;
                 currentBlock = "square";

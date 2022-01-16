@@ -76,6 +76,7 @@ public class UI : MonoBehaviour
             {
                 spawnedObject = nextBlockObjects[i];
                 creatorScript.SpawnSpecificBlock(nextBlockNames[i]);
+                managerScript.updateGhost();
             }
             if (i != nextBlocks.Length - 1)
             {
