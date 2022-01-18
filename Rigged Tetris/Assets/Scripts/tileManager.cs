@@ -431,55 +431,37 @@ public class tileManager : MonoBehaviour
         bool revertChange = false;
         if (creator.CurrentPieceCoord[0] < 0)
         {
-            this.shiftRight();
+            for (int i = 0; i < (1 - creator.CurrentPieceCoord[0]); i++) // also still broken
+            {
+                this.shiftRight();
+            }
         }
-        if (creator.CurrentPieceCoord[0] >= areaWidth - creator.CurrentPieceSize + 1)
+        if (creator.CurrentPieceCoord[0] >= areaWidth - creator.CurrentPieceSize + 1) // Is broken
         {
             this.shiftLeft();
         }
-        /*switch (creator.CurrentPieceSize)
-        {
-            case 2:
-                   [1][2] ->  [2][4] [0,1 -> 0,0][1,1 -> 0,1]
-                   [3][4] ->  [1][3] [0,0 -> 1,0][1,0 -> 1,1]
-                
-                Debug.Log(creator.CurrentPieceCoord[0] + " , " + creator.CurrentPieceCoord[1]);
-                gravityBlocks[creator.CurrentPieceCoord[0] , creator.CurrentPieceCoord[1]] = revert[creator.CurrentPieceCoord[0] , creator.CurrentPieceCoord[1] + 1];
-                gravityBlocks[creator.CurrentPieceCoord[0] , creator.CurrentPieceCoord[1] + 1] = revert[creator.CurrentPieceCoord[0] + 1 , creator.CurrentPieceCoord[1] + 1];
-                gravityBlocks[creator.CurrentPieceCoord[0] + 1 , creator.CurrentPieceCoord[1]] = revert[creator.CurrentPieceCoord[0] , creator.CurrentPieceCoord[1]];
-                gravityBlocks[creator.CurrentPieceCoord[0] + 1 , creator.CurrentPieceCoord[1] + 1] = revert[creator.CurrentPieceCoord[0] + 1 , creator.CurrentPieceCoord[1]];
-                break;
-            case 3:
-                
-                      [1][4][7]  -> [7][8][9] [0,2 -> 0,0][1,2 -> 0,1][2,2 -> 0,2]
-                      [2][5][8]  -> [4][5][6] [0,1 -> 1,0][1,1 -> 1,1][2,1 -> 1,2]
-                      [3][6][9]  -> [1][2][3] [0,0 -> 2,0][1,0 -> 2,1][2,0 -> 2,2]
-                
-                
-                break;
-            case 4:
-                
+        /* Data for rotating
                     [01][05][09][13]  -> [13][14][15][16]  [0,3 -> 0,0][1,3 -> 0,1][2,3 -> 0,2][3,3 -> 0,3]
                     [02][06][10][14]  -> [09][10][11][12]  [0,2 -> 1,0][1,2 -> 1,1][2,2 -> 1,2][3,2 -> 1,3]
                     [03][07][11][15]  -> [05][06][07][08]  [0,1 -> 2,0][1,1 -> 2,1][2,1 -> 2,2][3,1 -> 2,3]
                     [04][08][12][16]  -> [01][02][03][04]  [0,0 -> 3,0][1,0 -> 3,1][2,0 -> 3,2][3,0 -> 3,3]
-                
-
-                break;
-            default:
-                Debug.Log("Something went wrong in tileManager.rotate");
-                return;
-        }*/
-
-        for (int i = 0; i < creator.CurrentPieceSize; i++) // working, but doesn't feel like the rotation in the main game, going to check the rotation point for those and go from there
+        */
+        /*When rotating when the block shoudln't be able to, like a line piece horizontally sticking one block in a one block gap in the wall, it rotates some of the blocks into the wall, and leaves others
+        Managed to do the same with L block as well. I don't know why this would be happening.
+        Line piece broke just against the wall when trying to test the shifting.
+        Need to find a way to figure out if the block will stick out even without coords... might have to add in a variable that tracks the exact position of each piece of the block.
+        Idea: change shifting methods to have a bool return value, when the code detects an out of bounds it will try to shift, if this shift succeeds it will restart the for loop process, since it will also
+        be changed to check if it can rotate before doing so, if it can't shift it will just return.
+        */
+        for (int i = 0; i < creator.CurrentPieceSize; i++) 
         {
             for (int j = 0; j < creator.CurrentPieceSize; j++)
             {
-                if (gravityBlocks[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j] == true && stableBlocks[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i] == true)
+                if (gravityBlocks[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j] == true && stableBlocks[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i] == true) //index OutOfBound exception
                 {
                     revertChange = true;
                 }
-                gravityBlocks[creator.CurrentPieceCoord[0] + i , creator.CurrentPieceCoord[1] + j] = reference[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i];
+                gravityBlocks[creator.CurrentPieceCoord[0] + i , creator.CurrentPieceCoord[1] + j] = reference[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i]; //index OutOfBound exceotuib
             }
         }
 
@@ -553,7 +535,6 @@ public class tileManager : MonoBehaviour
                     {
                         distance = fakeDistance;
                     }
-                    Debug.Log(fakeDistance);
                     fakeDistance = 0;
                 }
             }
@@ -570,7 +551,6 @@ public class tileManager : MonoBehaviour
             Color newColor = creator.CurrentPieceColor;
             newColor.a = 0.25f;
             ghostBlocks[i].GetComponent<SpriteRenderer>().color = newColor;
-            Debug.Log(distance + " " + newPosition.y + " " + newPosition.x);
             ghostBlocks[i].SetActive(true);
             ghostBlocks[i].GetComponent<Transform>().position = newPosition;
         }
