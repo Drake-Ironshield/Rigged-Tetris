@@ -219,7 +219,7 @@ public class tileManager : MonoBehaviour
         }
     }
 
-    public void shiftRight()
+    public bool shiftRight()
     {
         bool[,] revert = (bool[,])gravityBlocks.Clone();
         bool revertChange = false;
@@ -227,7 +227,7 @@ public class tileManager : MonoBehaviour
         {
             if (gravityBlocks[areaWidth - 1,i] == true)
             {
-                return;
+                return false;
             }
         }
         for (int i = areaWidth - 1; i >= 0; i--)
@@ -251,13 +251,15 @@ public class tileManager : MonoBehaviour
         if (revertChange)
         {
             gravityBlocks = revert;
+            return false;
         }
         creator.CurrentPieceCoord[0]++;
         this.updateGhost();
         this.showBlocks();
+        return true;
     }
 
-    public void shiftLeft()
+    public bool shiftLeft()
     {
         bool[,] revert = (bool[,])gravityBlocks.Clone();
         bool revertChange = false;
@@ -265,7 +267,7 @@ public class tileManager : MonoBehaviour
         {
             if (gravityBlocks [0 , i] == true)
             {
-                return;
+                return false;
             }
         }
         for (int i = 0; i < areaWidth; i++)
@@ -289,10 +291,12 @@ public class tileManager : MonoBehaviour
         if (revertChange)
         {
             gravityBlocks = revert;
+            return false;
         }
         creator.CurrentPieceCoord[0]--;
         this.updateGhost();
         this.showBlocks();
+        return true;
     }
 
     public void shift()
@@ -426,10 +430,8 @@ public class tileManager : MonoBehaviour
 
     public void rotate()
     {
-        bool[,] revert = (bool[,])gravityBlocks.Clone();
         bool[,] reference = (bool[,])gravityBlocks.Clone();
-        bool revertChange = false;
-        if (creator.CurrentPieceCoord[0] < 0)
+        /*if (creator.CurrentPieceCoord[0] < 0)
         {
             for (int i = 0; i < (1 - creator.CurrentPieceCoord[0]); i++) // also still broken
             {
@@ -439,7 +441,8 @@ public class tileManager : MonoBehaviour
         if (creator.CurrentPieceCoord[0] >= areaWidth - creator.CurrentPieceSize + 1) // Is broken
         {
             this.shiftLeft();
-        }
+        }*/
+
         /* Data for rotating
                     [01][05][09][13]  -> [13][14][15][16]  [0,3 -> 0,0][1,3 -> 0,1][2,3 -> 0,2][3,3 -> 0,3]
                     [02][06][10][14]  -> [09][10][11][12]  [0,2 -> 1,0][1,2 -> 1,1][2,2 -> 1,2][3,2 -> 1,3]
@@ -452,7 +455,9 @@ public class tileManager : MonoBehaviour
         Need to find a way to figure out if the block will stick out even without coords... might have to add in a variable that tracks the exact position of each piece of the block.
         Idea: change shifting methods to have a bool return value, when the code detects an out of bounds it will try to shift, if this shift succeeds it will restart the for loop process, since it will also
         be changed to check if it can rotate before doing so, if it can't shift it will just return.
+        Issue with out of bounds when rotating to close to the bottem
         */
+        /* BEWARE, OLD CODE AHEAD (Revert was cycled out for actually checking before you decide to rotate, you know, like the logical thing to do)
         for (int i = 0; i < creator.CurrentPieceSize; i++) 
         {
             for (int j = 0; j < creator.CurrentPieceSize; j++)
@@ -464,12 +469,66 @@ public class tileManager : MonoBehaviour
                 gravityBlocks[creator.CurrentPieceCoord[0] + i , creator.CurrentPieceCoord[1] + j] = reference[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i]; //index OutOfBound exceotuib
             }
         }
-
-
-        if (revertChange)
+        */
+        bool doShiftLeft = false;
+        bool doShiftRight = false;
+        bool continueLoop = false;
+        do
         {
-            gravityBlocks = revert;
-            Debug.Log("reverting Change");
+            continueLoop = false;
+            doShiftLeft = false;
+            doShiftRight = false;
+            if (creator.CurrentPieceCoord[0] < 0)
+            {
+                doShiftRight = true;
+                continueLoop = true;
+            }
+            for (int i = creator.CurrentPieceSize - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < creator.CurrentPieceSize; j++)
+                {
+                    if (creator.CurrentPieceCoord[0] + i >= areaWidth && gravityBlocks[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j]) // Is going out of bounds of array while trying to check if it exists
+                    {// Maybe do the check to see if it collides and then move blocks if it does.
+                        Debug.Log("Triggered");
+                        doShiftLeft = true;
+                        continueLoop = true;
+                    }
+                }
+            }
+            
+            if (doShiftLeft)
+            {
+                if (!this.shiftLeft())
+                {
+                    return;
+                }
+            }
+            if (doShiftRight)
+            {
+                if (!this.shiftRight())
+                {
+                    return;
+                }
+            }
+        } while (continueLoop);
+
+        
+        for (int i = 0; i < creator.CurrentPieceSize; i++)
+        {
+            for (int j = 0; j < creator.CurrentPieceSize; j++)
+            {
+                if (gravityBlocks[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j] == true && stableBlocks[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i] == true) 
+                {
+                    return;
+                }
+            }   
+        }
+        for (int i = 0; i < creator.CurrentPieceSize; i++)
+        {
+            for (int j = 0; j < creator.CurrentPieceSize; j++)
+            {
+                gravityBlocks[creator.CurrentPieceCoord[0] + i , creator.CurrentPieceCoord[1] + j] = reference[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i];
+            }
         }
         this.updateGhost();
         this.showBlocks();

@@ -233,7 +233,7 @@ public class segmentCreator : MonoBehaviour
                 Debug.Log("Something went wrong in spawnBlock");
                 break;
         }
-        int[] offset = new int[2] {0,0};
+        int[] offset = new int[2] {0,0}; // I think the offset always ends up as 
         if (arraySize == 4)
         {
             offset[0] = 1;
