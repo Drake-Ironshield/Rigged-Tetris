@@ -95,6 +95,11 @@ public class tileManager : MonoBehaviour
                 controlDownTimer = 0;
             }
         }
+        // For forcing a spawn, temporary
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            UIscript.shiftNextBlocks();
+        }
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             controlDownTimer = 0;
@@ -177,7 +182,7 @@ public class tileManager : MonoBehaviour
             this.showBlocks();
         }
         // automatic movement/tile spawning
-        if (!controlledDown)
+        /*if (!controlledDown)
         {
             timer += Time.deltaTime;
         }
@@ -189,7 +194,7 @@ public class tileManager : MonoBehaviour
             {
                 UIscript.shiftNextBlocks();
             }
-        }
+        }*/
     }
 
     public void showBlocks()
@@ -473,12 +478,14 @@ public class tileManager : MonoBehaviour
         bool doShiftLeft = false;
         bool doShiftRight = false;
         bool continueLoop = false;
+        bool testBool = false;
+        Debug.Log("(" + creator.CurrentPieceCoord[0] + "," + creator.CurrentPieceCoord[1] + ")");
         do
-        {
+        { // when the line block shifts it seems to change the blockPosition so it doesn't rotate correctly
             continueLoop = false;
             doShiftLeft = false;
             doShiftRight = false;
-            if (creator.CurrentPieceCoord[0] < 0)
+            if (creator.CurrentPieceCoord[0] < 0) 
             {
                 doShiftRight = true;
                 continueLoop = true;
@@ -487,17 +494,30 @@ public class tileManager : MonoBehaviour
             {
                 for (int j = 0; j < creator.CurrentPieceSize; j++)
                 {
-                    if (creator.CurrentPieceCoord[0] + i >= areaWidth && gravityBlocks[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j]) // Is going out of bounds of array while trying to check if it exists
-                    {// Maybe do the check to see if it collides and then move blocks if it does.
-                        Debug.Log("Triggered");
+                    try
+                    {
+                        if (creator.CurrentPieceCoord[0] + i >= areaWidth && gravityBlocks[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j])
+                        {
+                            Debug.Log("Triggered");
+                            doShiftLeft = true;
+                            continueLoop = true;
+                            i = -1;
+                            break;
+                        }
+                    }
+                    catch (System.IndexOutOfRangeException)//In the future check to see if there is another way then purposefully breaking the code
+                    {
                         doShiftLeft = true;
                         continueLoop = true;
+                        i = -1;
+                        break;
                     }
                 }
             }
             
             if (doShiftLeft)
             {
+                testBool = true;
                 if (!this.shiftLeft())
                 {
                     return;
@@ -505,14 +525,16 @@ public class tileManager : MonoBehaviour
             }
             if (doShiftRight)
             {
+                testBool = true;
                 if (!this.shiftRight())
                 {
                     return;
                 }
             }
+            Debug.Log("(" + creator.CurrentPieceCoord[0] + "," + creator.CurrentPieceCoord[1] + ")");
         } while (continueLoop);
-
-        
+        if (testBool) {return;}
+        // lines CurrentCoord getting messed up in rotation, not sure how?
         for (int i = 0; i < creator.CurrentPieceSize; i++)
         {
             for (int j = 0; j < creator.CurrentPieceSize; j++)
