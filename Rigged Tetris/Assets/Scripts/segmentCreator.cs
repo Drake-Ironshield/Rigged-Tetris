@@ -146,7 +146,7 @@ public class segmentCreator : MonoBehaviour
             }
         }
         bag[blockType] = false; 
-        switch (2) 
+        switch (blockType) 
         { // supposed to be blockType
             case 0:
                 return "square";

@@ -96,10 +96,11 @@ public class tileManager : MonoBehaviour
             }
         }
         // For forcing a spawn, temporary
-        if (Input.GetKeyDown(KeyCode.F))
+        /*if (Input.GetKeyDown(KeyCode.F))
         {
             UIscript.shiftNextBlocks();
-        }
+        }*/
+        // Down Arrow Pressed
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             controlDownTimer = 0;
@@ -182,7 +183,7 @@ public class tileManager : MonoBehaviour
             this.showBlocks();
         }
         // automatic movement/tile spawning
-        /*if (!controlledDown)
+        if (!controlledDown)
         {
             timer += Time.deltaTime;
         }
@@ -194,7 +195,7 @@ public class tileManager : MonoBehaviour
             {
                 UIscript.shiftNextBlocks();
             }
-        }*/
+        }
     }
 
     public void showBlocks()
@@ -435,18 +436,6 @@ public class tileManager : MonoBehaviour
 
     public void rotate()
     {
-        bool[,] reference = (bool[,])gravityBlocks.Clone();
-        /*if (creator.CurrentPieceCoord[0] < 0)
-        {
-            for (int i = 0; i < (1 - creator.CurrentPieceCoord[0]); i++) // also still broken
-            {
-                this.shiftRight();
-            }
-        }
-        if (creator.CurrentPieceCoord[0] >= areaWidth - creator.CurrentPieceSize + 1) // Is broken
-        {
-            this.shiftLeft();
-        }*/
 
         /* Data for rotating
                     [01][05][09][13]  -> [13][14][15][16]  [0,3 -> 0,0][1,3 -> 0,1][2,3 -> 0,2][3,3 -> 0,3]
@@ -454,34 +443,16 @@ public class tileManager : MonoBehaviour
                     [03][07][11][15]  -> [05][06][07][08]  [0,1 -> 2,0][1,1 -> 2,1][2,1 -> 2,2][3,1 -> 2,3]
                     [04][08][12][16]  -> [01][02][03][04]  [0,0 -> 3,0][1,0 -> 3,1][2,0 -> 3,2][3,0 -> 3,3]
         */
-        /*When rotating when the block shoudln't be able to, like a line piece horizontally sticking one block in a one block gap in the wall, it rotates some of the blocks into the wall, and leaves others
-        Managed to do the same with L block as well. I don't know why this would be happening.
-        Line piece broke just against the wall when trying to test the shifting.
-        Need to find a way to figure out if the block will stick out even without coords... might have to add in a variable that tracks the exact position of each piece of the block.
-        Idea: change shifting methods to have a bool return value, when the code detects an out of bounds it will try to shift, if this shift succeeds it will restart the for loop process, since it will also
-        be changed to check if it can rotate before doing so, if it can't shift it will just return.
-        Issue with out of bounds when rotating to close to the bottem
-        */
-        /* BEWARE, OLD CODE AHEAD (Revert was cycled out for actually checking before you decide to rotate, you know, like the logical thing to do)
-        for (int i = 0; i < creator.CurrentPieceSize; i++) 
+
+        if (creator.CurrentPieceCoord[1] < creator.CurrentPieceSize - 1)
         {
-            for (int j = 0; j < creator.CurrentPieceSize; j++)
-            {
-                if (gravityBlocks[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j] == true && stableBlocks[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i] == true) //index OutOfBound exception
-                {
-                    revertChange = true;
-                }
-                gravityBlocks[creator.CurrentPieceCoord[0] + i , creator.CurrentPieceCoord[1] + j] = reference[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i]; //index OutOfBound exceotuib
-            }
+            return;
         }
-        */
         bool doShiftLeft = false;
         bool doShiftRight = false;
         bool continueLoop = false;
-        bool testBool = false;
-        Debug.Log("(" + creator.CurrentPieceCoord[0] + "," + creator.CurrentPieceCoord[1] + ")");
         do
-        { // when the line block shifts it seems to change the blockPosition so it doesn't rotate correctly
+        { 
             continueLoop = false;
             doShiftLeft = false;
             doShiftRight = false;
@@ -517,7 +488,6 @@ public class tileManager : MonoBehaviour
             
             if (doShiftLeft)
             {
-                testBool = true;
                 if (!this.shiftLeft())
                 {
                     return;
@@ -525,16 +495,13 @@ public class tileManager : MonoBehaviour
             }
             if (doShiftRight)
             {
-                testBool = true;
                 if (!this.shiftRight())
                 {
                     return;
                 }
             }
-            Debug.Log("(" + creator.CurrentPieceCoord[0] + "," + creator.CurrentPieceCoord[1] + ")");
         } while (continueLoop);
-        if (testBool) {return;}
-        // lines CurrentCoord getting messed up in rotation, not sure how?
+
         for (int i = 0; i < creator.CurrentPieceSize; i++)
         {
             for (int j = 0; j < creator.CurrentPieceSize; j++)
@@ -545,11 +512,13 @@ public class tileManager : MonoBehaviour
                 }
             }   
         }
+        bool[,] reference = (bool[,])gravityBlocks.Clone();
         for (int i = 0; i < creator.CurrentPieceSize; i++)
         {
             for (int j = 0; j < creator.CurrentPieceSize; j++)
             {
-                gravityBlocks[creator.CurrentPieceCoord[0] + i , creator.CurrentPieceCoord[1] + j] = reference[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i];
+                //gravityBlocks[creator.CurrentPieceCoord[0] + i , creator.CurrentPieceCoord[1] + j] = reference[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i];
+                gravityBlocks[creator.CurrentPieceCoord[0] + (creator.CurrentPieceSize - j - 1) , creator.CurrentPieceCoord[1] + i] = reference[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j];
             }
         }
         this.updateGhost();
