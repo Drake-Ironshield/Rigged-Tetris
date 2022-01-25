@@ -461,29 +461,11 @@ public class tileManager : MonoBehaviour
                 doShiftRight = true;
                 continueLoop = true;
             }
-            for (int i = creator.CurrentPieceSize - 1; i >= 0; i--)
+
+            if (creator.CurrentPieceSize - 1 + creator.CurrentPieceCoord[0] >= areaWidth)
             {
-                for (int j = 0; j < creator.CurrentPieceSize; j++)
-                {
-                    try
-                    {
-                        if (creator.CurrentPieceCoord[0] + i >= areaWidth && gravityBlocks[creator.CurrentPieceCoord[0] + i, creator.CurrentPieceCoord[1] + j])
-                        {
-                            Debug.Log("Triggered");
-                            doShiftLeft = true;
-                            continueLoop = true;
-                            i = -1;
-                            break;
-                        }
-                    }
-                    catch (System.IndexOutOfRangeException)//In the future check to see if there is another way then purposefully breaking the code
-                    {
-                        doShiftLeft = true;
-                        continueLoop = true;
-                        i = -1;
-                        break;
-                    }
-                }
+                doShiftLeft = true;
+                continueLoop = true;
             }
             
             if (doShiftLeft)
