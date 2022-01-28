@@ -33,6 +33,9 @@ public class UI : MonoBehaviour
     tileManager managerScript;
     int level;
     int currentBlockAmount;
+    public GameObject pauseMenu;
+    bool isPauseOpen;
+    public bool IsPauseOpen {get {return isPauseOpen;}}
 
     // Start is called before the first frame update
     void Start()
@@ -64,7 +67,19 @@ public class UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!isPauseOpen)
+            {
+                pauseMenu.SetActive(false);
+                isPauseOpen = true;
+            }
+            else
+            {
+                pauseMenu.SetActive(false);
+                isPauseOpen = false;
+            }
+        }
     }
 
     public void shiftNextBlocks()
@@ -195,4 +210,16 @@ public class UI : MonoBehaviour
         int blockTextInt = blocksToLevelUp - currentBlockAmount;
         blockTextScript.text = blockTextInt.ToString();
     }
+
+    public void resume()
+    {
+        pauseMenu.SetActive(false);
+        isPauseOpen = false;
+    }
+
+    public void returnToMain()
+    {
+
+    }
+
 }

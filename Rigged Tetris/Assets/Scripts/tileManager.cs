@@ -80,6 +80,11 @@ public class tileManager : MonoBehaviour
             }
         }
 
+        if (UIscript.IsPauseOpen)
+        {
+            return;
+        }
+
         // Down Arrow Pressed
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
