@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pauseMenu.SetActive(false);
         textScripts = new Text[textObjects.Length];
         levelTextScript = levelText.GetComponent<Text>();
         blockTextScript = blockText.GetComponent<Text>();
@@ -71,12 +73,20 @@ public class UI : MonoBehaviour
         {
             if (!isPauseOpen)
             {
-                pauseMenu.SetActive(false);
+                pauseMenu.SetActive(true);
+                for (int i = 0; i < managerScript.GhostBlocks.Length; i++)
+                {
+                    managerScript.GhostBlocks[i].SetActive(false);
+                }
                 isPauseOpen = true;
             }
             else
             {
                 pauseMenu.SetActive(false);
+                for (int i = 0; i < managerScript.GhostBlocks.Length; i++)
+                {
+                    managerScript.GhostBlocks[i].SetActive(true);
+                }
                 isPauseOpen = false;
             }
         }
@@ -219,7 +229,12 @@ public class UI : MonoBehaviour
 
     public void returnToMain()
     {
+        SceneManager.LoadScene("Main Menu");
+    }
 
+    public void exitGame()
+    {
+        Application.Quit();
     }
 
 }

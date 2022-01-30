@@ -34,6 +34,7 @@ public class tileManager : MonoBehaviour
     public float levelSpeedUp;
     public GameObject ghostPrefab;
     GameObject[] ghostBlocks;
+    public GameObject[] GhostBlocks {get {return ghostBlocks;} set {ghostBlocks = value;}}
 
     bool isGameOver;
     // Start is called before the first frame update
@@ -100,17 +101,12 @@ public class tileManager : MonoBehaviour
                 controlDownTimer = 0;
             }
         }
-        // For forcing a spawn, temporary
-        /*if (Input.GetKeyDown(KeyCode.F))
-        {
-            UIscript.shiftNextBlocks();
-        }*/
-        // Down Arrow Pressed
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             controlDownTimer = 0;
             controlledDown = false;
         }
+        
         // Right Arrow Pressed
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
