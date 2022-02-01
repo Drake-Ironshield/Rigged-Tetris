@@ -319,7 +319,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 45257167}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: increaseValue
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &45257167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,7 +808,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 236576473}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: increaseValue
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: delay
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &236576473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1312,15 +1334,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2031389275}
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: decreaseValue
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: side
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &540163744
@@ -2172,7 +2194,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 957538482}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: increaseValue
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: side
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &957538482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3935,7 +3968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1563475676
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4153,7 +4186,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1735110364}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: decreaseValue
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: delay
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1735110364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4752,7 +4796,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1929835129}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: decreaseValue
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: down
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1929835129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5103,11 +5158,11 @@ MonoBehaviour:
   settingsMenu: {fileID: 1563475675}
   incrementAmount: 25
   sideText: {fileID: 1540248658}
-  sideDefault: 250
+  sideDefault: 100
   downText: {fileID: 623432359}
-  downDefault: 250
+  downDefault: 100
   delayText: {fileID: 117328829}
-  delayDefault: 250
+  delayDefault: 50
 --- !u!1 &2062625371
 GameObject:
   m_ObjectHideFlags: 0

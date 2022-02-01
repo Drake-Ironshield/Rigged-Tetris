@@ -1120,7 +1120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &544006873
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1392,6 +1392,7 @@ GameObject:
   - component: {fileID: 726589441}
   - component: {fileID: 726589440}
   - component: {fileID: 726589444}
+  - component: {fileID: 726589445}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -1534,6 +1535,27 @@ MonoBehaviour:
   blockText: {fileID: 1267453408}
   manager: {fileID: 2109712946}
   pauseMenu: {fileID: 544006872}
+--- !u!114 &726589445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726589439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf4138a01aa5e147a42eed1c508ee5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isReference: 1
+  settingsMenu: {fileID: 0}
+  incrementAmount: 0
+  sideText: {fileID: 0}
+  sideDefault: 0
+  downText: {fileID: 0}
+  downDefault: 0
+  delayText: {fileID: 0}
+  delayDefault: 0
 --- !u!1 &841942679
 GameObject:
   m_ObjectHideFlags: 0
@@ -17136,8 +17158,6 @@ MonoBehaviour:
   shiftTime: 0.5
   bottemLeftX: -4.5
   bottemLeftY: -5.5
-  controlTickRate: 0.1
-  controlOffset: 0.05
   emptySpot: {fileID: 11400000, guid: e1bd5cfd5cedbd9498a1d55abe708acc, type: 2}
   filledSpot: {fileID: 11400000, guid: b9aa24981dc28db4d8e5e0fda91901f0, type: 2}
   UIObject: {fileID: 726589439}

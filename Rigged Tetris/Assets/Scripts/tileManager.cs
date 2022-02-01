@@ -11,12 +11,13 @@ public class tileManager : MonoBehaviour
     public float shiftTime = 1;
     public float bottemLeftX;
     public float bottemLeftY;
-    public float controlTickRate = .1F;
-    public float controlOffset = .2F;
+    float controlTickRate = .1F;
+    float controlOffset = .2F;
     public Tile emptySpot;
     public Tile filledSpot;
     public GameObject UIObject;
     UI UIscript;
+    MainMenu keybindScript;
     bool[,] stableBlocks;
     bool[,] gravityBlocks;
     Color[,] blockColors;
@@ -44,7 +45,10 @@ public class tileManager : MonoBehaviour
         isGameOver = false;
         hasHeld = false;
         UIscript = UIObject.GetComponent<UI>();
+        keybindScript = UIObject.GetComponent<MainMenu>();
         creator = tileSpawner.GetComponent<segmentCreator>();
+        controlTickRate = keybindScript.SideValue / 1000;
+        controlOffset = keybindScript.DelayValue / 1000;
         controlDownTimer = 0;
         controlRightTimer = 0;
         controlLeftTimer = 0;
