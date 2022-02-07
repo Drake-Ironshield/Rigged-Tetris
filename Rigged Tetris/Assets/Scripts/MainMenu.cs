@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
     public GameObject downText;
     public int downDefault;
     static int downValue;
+    public int DownValue {get {return downValue;} set {downValue = value;}}
     public GameObject delayText;
     public int delayDefault;
     static int delayValue;

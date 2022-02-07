@@ -12,6 +12,7 @@ public class tileManager : MonoBehaviour
     public float bottemLeftX;
     public float bottemLeftY;
     float controlTickRate = .1F;
+    float downControlTickRate;
     float controlOffset = .2F;
     public Tile emptySpot;
     public Tile filledSpot;
@@ -47,8 +48,9 @@ public class tileManager : MonoBehaviour
         UIscript = UIObject.GetComponent<UI>();
         keybindScript = UIObject.GetComponent<MainMenu>();
         creator = tileSpawner.GetComponent<segmentCreator>();
-        controlTickRate = keybindScript.SideValue / 1000;
-        controlOffset = keybindScript.DelayValue / 1000;
+        controlTickRate = keybindScript.SideValue / 1000f;
+        controlOffset = keybindScript.DelayValue / 1000f;
+        downControlTickRate = keybindScript.DownValue / 1000f;
         controlDownTimer = 0;
         controlRightTimer = 0;
         controlLeftTimer = 0;
@@ -71,7 +73,10 @@ public class tileManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {   if (downControlTickRate > shiftTime)
+        {
+            downControlTickRate = shiftTime;
+        }
         if (isGameOver)
         {
             if (Input.GetKeyDown(KeyCode.R))
@@ -99,7 +104,7 @@ public class tileManager : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow))
         {
             controlDownTimer += Time.deltaTime;
-            if (controlDownTimer >= controlTickRate)
+            if (controlDownTimer >= downControlTickRate)
             {
                 this.shift();
                 controlDownTimer = 0;
