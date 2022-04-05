@@ -95,13 +95,13 @@ public class tileManager : MonoBehaviour
             return;
         }
 
-        // Down Arrow Pressed
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        // Shift Down Pressed
+        if (Input.GetKeyDown(keybindScript.ShiftDownBind))
         {
             this.shift();
             controlledDown = true;
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(keybindScript.ShiftDownBind))
         {
             controlDownTimer += Time.deltaTime;
             if (controlDownTimer >= downControlTickRate)
@@ -110,18 +110,18 @@ public class tileManager : MonoBehaviour
                 controlDownTimer = 0;
             }
         }
-        if (Input.GetKeyUp(KeyCode.DownArrow))
+        if (Input.GetKeyUp(keybindScript.ShiftDownBind))
         {
             controlDownTimer = 0;
             controlledDown = false;
         }
         
-        // Right Arrow Pressed
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        // Shift Right Pressed
+        if (Input.GetKeyDown(keybindScript.ShiftRightBind))
         {
             this.shiftRight();
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(keybindScript.ShiftRightBind))
         {
             controlRightTimer += Time.deltaTime;
             if (controlRightTimer >= controlTickRate)
@@ -130,16 +130,16 @@ public class tileManager : MonoBehaviour
                 controlRightTimer = 0;
             }
         }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyUp(keybindScript.ShiftRightBind))
         {
             controlRightTimer = controlOffset * -1;
         }
-        // Left Arrow Pressed
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        // Shift Left Pressed
+        if (Input.GetKeyDown(keybindScript.ShiftLeftBind))
         {
             this.shiftLeft();
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(keybindScript.ShiftLeftBind))
         {
             controlLeftTimer += Time.deltaTime;
             if (controlLeftTimer >= controlTickRate)
@@ -148,12 +148,12 @@ public class tileManager : MonoBehaviour
                 controlLeftTimer = 0;
             }
         }
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        if (Input.GetKeyUp(keybindScript.ShiftLeftBind))
         {
             controlLeftTimer = controlOffset * -1;
         }
-        // Space Pressed
-        if (Input.GetKeyDown(KeyCode.Space))
+        // Place Button Pressed
+        if (Input.GetKeyDown(keybindScript.PlaceBind))
         {
             while (tileSpawner.GetComponent<segmentCreator>().BlockFalling)
             {
@@ -161,13 +161,13 @@ public class tileManager : MonoBehaviour
             }
             UIscript.shiftNextBlocks();
         }
-        // Z Pressed
-        if (Input.GetKeyDown(KeyCode.Z))
+        // Rotate Button Pressed
+        if (Input.GetKeyDown(keybindScript.RotateBind))
         {
             this.rotate();
         }
-        // C Pressed
-        if (Input.GetKeyDown(KeyCode.C) && !hasHeld)
+        // Hold Button Pressed
+        if (Input.GetKeyDown(keybindScript.StoreBind) && !hasHeld)
         {
             string heldBlock = creator.CurrentHeldBlock;
             for (int i = 0; i < areaWidth; ++i)

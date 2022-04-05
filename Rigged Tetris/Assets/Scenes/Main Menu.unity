@@ -201,7 +201,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 23471989}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: startChangeKeyBind
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 478863579}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &23471989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1540,7 +1551,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 602965323}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: startChangeKeyBind
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1770217244}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &602965323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3274,7 +3296,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1292399159}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: startChangeKeyBind
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 991870670}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1292399159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3760,7 +3793,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1488810668}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: startChangeKeyBind
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 625041526}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1488810668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4936,7 +4980,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1961185799}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: startChangeKeyBind
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 198213437}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1961185799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5175,8 +5230,19 @@ MonoBehaviour:
   downDefault: 100
   delayText: {fileID: 117328829}
   delayDefault: 50
-  placeBindObj: {fileID: 0}
-  placeBindDefault: 
+  bindTextObj:
+  - {fileID: 198213437}
+  - {fileID: 991870670}
+  - {fileID: 478863579}
+  - {fileID: 1529988028}
+  - {fileID: 1770217244}
+  - {fileID: 625041526}
+  shiftRightBindDefault: RightArrow
+  shiftLeftBindDefault: LeftArrow
+  shiftDownBindDefault: DownArrow
+  placeBindDefault: Space
+  rotateBindDefault: Z
+  storeBindDefault: C
 --- !u!1 &2062625371
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,10 +25,30 @@ public class MainMenu : MonoBehaviour
     static int delayValue;
     public int DelayValue {get {return delayValue;} set {delayValue = value;}}
     //Keybinds
-    public GameObject placeBindObj;
+    //text objects for binds
+    public GameObject[] bindTextObj;
+    // default values for binds
+    public string shiftRightBindDefault;
+    public string shiftLeftBindDefault;
+    public string shiftDownBindDefault;
     public string placeBindDefault;
+    public string rotateBindDefault;
+    public string storeBindDefault;
+    //binds themselves
+    static bool keyBindsAssigned = false;
+    static KeyCode shiftRightBind;
+    public KeyCode ShiftRightBind {get {return shiftRightBind;} set {shiftRightBind = value;}}
+    static KeyCode shiftLeftBind;
+    public KeyCode ShiftLeftBind {get {return shiftLeftBind;} set {shiftLeftBind = value;}}
+    static KeyCode shiftDownBind;
+    public KeyCode ShiftDownBind {get {return shiftDownBind;} set {shiftDownBind = value;}}
     static KeyCode placeBind;
     public KeyCode PlaceBind {get {return placeBind;} set {placeBind = value;}}
+    static KeyCode rotateBind;
+    public KeyCode RotateBind {get {return rotateBind;} set {rotateBind = value;}}
+    static KeyCode storeBind;
+    public KeyCode StoreBind {get {return storeBind;} set {storeBind = value;}}
+    // For this scripts use only
     GameObject currentButton;
     string keybindStored;
     string userInput;
@@ -41,6 +61,7 @@ public class MainMenu : MonoBehaviour
             return;
         }
         settingsMenu.SetActive(false);
+        // initilizing Shift Speed
         if (sideValue == 0)
         {
             sideValue = sideDefault;
@@ -56,6 +77,18 @@ public class MainMenu : MonoBehaviour
         sideText.GetComponent<Text>().text = sideValue.ToString();
         downText.GetComponent<Text>().text = downValue.ToString();
         delayText.GetComponent<Text>().text = delayValue.ToString();
+        // Initilizing Keybinds
+        if (keyBindsAssigned)
+        {
+            return;
+        }
+        shiftRightBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftRightBindDefault);
+        shiftLeftBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftLeftBindDefault);
+        shiftDownBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftDownBindDefault);
+        placeBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), placeBindDefault);
+        rotateBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), rotateBindDefault);
+        storeBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), storeBindDefault);
+        keyBindsAssigned = true;
     }
 
     // Update is called once per frame
@@ -123,16 +156,31 @@ public class MainMenu : MonoBehaviour
         Debug.Log(userInput);
         userInput = userInput[0].ToString().ToUpper();
         KeyCode newBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), userInput);
-        switch("place")
+        switch(currentButton.gameObject.name)
         {
-            case "place":
+            case "Shift Right Text":
+                        shiftRightBind = newBind;
+                        break;
+            case "Shift Left Text":
+                        shiftLeftBind = newBind;
+                        break;
+            case "Shift Down Text":
+                        shiftDownBind = newBind;
+                        break;
+            case "Place Text":
                         placeBind = newBind;
-                        currentButton.GetComponent<Text>().text = userInput;
+                        break;
+            case "Rotate Text":
+                        rotateBind = newBind;
+                        break;
+            case "Store Text":
+                        storeBind = newBind;
                         break;
             default:
                     Debug.Log("Something went wrong");
-                    break;
+                    return;
         }
+        currentButton.GetComponent<Text>().text = userInput;
     }
 
 
