@@ -25,6 +25,13 @@ public class MainMenu : MonoBehaviour
     static int delayValue;
     public int DelayValue {get {return delayValue;} set {delayValue = value;}}
     //Keybinds
+    public GameObject placeBindObj;
+    public string placeBindDefault;
+    static KeyCode placeBind;
+    public KeyCode PlaceBind {get {return placeBind;} set {placeBind = value;}}
+    GameObject currentButton;
+    string keybindStored;
+    string userInput;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +61,7 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void Exit()
@@ -76,6 +83,58 @@ public class MainMenu : MonoBehaviour
     {
         settingsMenu.SetActive(false);
     }
+
+    // Keybind changing
+
+    IEnumerator findKeyPressed()
+    {
+        userInput = "";
+        float maxTime = 5F;
+        float time = 0;
+        while (true)
+        {
+            userInput = Input.inputString;
+            if (userInput != "")
+            {
+                this.changeKeyBind();
+                break;
+            }
+            time += Time.deltaTime;
+            if (time > maxTime)
+            {
+                Debug.Log("Took to long");
+                currentButton.GetComponent<Text>().text = keybindStored;
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    public void startChangeKeyBind(GameObject button)
+    {
+        currentButton = button;
+        keybindStored = currentButton.GetComponent<Text>().text;
+        currentButton.GetComponent<Text>().text = "-";
+        StartCoroutine(findKeyPressed());
+    }
+
+    public void changeKeyBind()
+    {
+        Debug.Log(userInput);
+        userInput = userInput[0].ToString().ToUpper();
+        KeyCode newBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), userInput);
+        switch("place")
+        {
+            case "place":
+                        placeBind = newBind;
+                        currentButton.GetComponent<Text>().text = userInput;
+                        break;
+            default:
+                    Debug.Log("Something went wrong");
+                    break;
+        }
+    }
+
 
     public void decreaseValue(string type) // Unity is stupid and win't let you use multi argument methods for buttons.
     {

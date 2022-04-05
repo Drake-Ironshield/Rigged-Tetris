@@ -4678,7 +4678,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1855115151}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2031389280}
+        m_MethodName: startChangeKeyBind
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1529988028}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1855115151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5155,6 +5166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf4138a01aa5e147a42eed1c508ee5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReference: 0
   settingsMenu: {fileID: 1563475675}
   incrementAmount: 25
   sideText: {fileID: 1540248658}
@@ -5163,6 +5175,8 @@ MonoBehaviour:
   downDefault: 100
   delayText: {fileID: 117328829}
   delayDefault: 50
+  placeBindObj: {fileID: 0}
+  placeBindDefault: 
 --- !u!1 &2062625371
 GameObject:
   m_ObjectHideFlags: 0
