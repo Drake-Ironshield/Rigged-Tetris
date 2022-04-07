@@ -51,7 +51,7 @@ public class MainMenu : MonoBehaviour
     // For this scripts use only
     GameObject currentButton;
     string keybindStored;
-    string userInput;
+    KeyCode userInput;
 
     // Start is called before the first frame update
     void Start()
@@ -118,16 +118,23 @@ public class MainMenu : MonoBehaviour
     }
 
     // Keybind changing
+    void OnGUI() // Use .shift to detect if it is the shift key, then use IsButtonDown for the two key codes to figure out which one is being pressed down. Set Keycode the the right one.
+    {
+        if (!isReference && Event.current.isKey)
+        {
+            userInput = Event.current.keyCode;
+        }
+    }
 
     IEnumerator findKeyPressed()
     {
-        userInput = "";
         float maxTime = 5F;
         float time = 0;
+        userInput = KeyCode.None;
         while (true)
         {
-            userInput = Input.inputString;
-            if (userInput != "")
+            Debug.Log(userInput);
+            if (userInput != KeyCode.None)
             {
                 this.changeKeyBind();
                 break;
@@ -153,34 +160,32 @@ public class MainMenu : MonoBehaviour
 
     public void changeKeyBind()
     {
-        Debug.Log(userInput);
-        userInput = userInput[0].ToString().ToUpper();
-        KeyCode newBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), userInput);
+        Debug.Log(userInput.ToString());
         switch(currentButton.gameObject.name)
         {
             case "Shift Right Text":
-                        shiftRightBind = newBind;
+                        shiftRightBind = userInput;
                         break;
             case "Shift Left Text":
-                        shiftLeftBind = newBind;
+                        shiftLeftBind = userInput;
                         break;
             case "Shift Down Text":
-                        shiftDownBind = newBind;
+                        shiftDownBind = userInput;
                         break;
             case "Place Text":
-                        placeBind = newBind;
+                        placeBind = userInput;
                         break;
             case "Rotate Text":
-                        rotateBind = newBind;
+                        rotateBind = userInput;
                         break;
             case "Store Text":
-                        storeBind = newBind;
+                        storeBind = userInput;
                         break;
             default:
                     Debug.Log("Something went wrong");
                     return;
         }
-        currentButton.GetComponent<Text>().text = userInput;
+        currentButton.GetComponent<Text>().text = userInput.ToString();
     }
 
 
