@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
     public string rotateBindDefault;
     public string storeBindDefault;
     //binds themselves
-    static bool keyBindsAssigned = false;
+    static bool keybindsAssigned = false;
     static KeyCode shiftRightBind;
     public KeyCode ShiftRightBind {get {return shiftRightBind;} set {shiftRightBind = value;}}
     static KeyCode shiftLeftBind;
@@ -48,10 +48,13 @@ public class MainMenu : MonoBehaviour
     public KeyCode RotateBind {get {return rotateBind;} set {rotateBind = value;}}
     static KeyCode storeBind;
     public KeyCode StoreBind {get {return storeBind;} set {storeBind = value;}}
+    //Text objects for each button
+    public GameObject[] buttonTextObjects;
     // For this scripts use only
     GameObject currentButton;
     string keybindStored;
     KeyCode userInput;
+    bool changingKeyBind;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +64,7 @@ public class MainMenu : MonoBehaviour
             return;
         }
         settingsMenu.SetActive(false);
+        changingKeyBind = false;
         // initilizing Shift Speed
         if (sideValue == 0)
         {
@@ -78,17 +82,23 @@ public class MainMenu : MonoBehaviour
         downText.GetComponent<Text>().text = downValue.ToString();
         delayText.GetComponent<Text>().text = delayValue.ToString();
         // Initilizing Keybinds
-        if (keyBindsAssigned)
+        if (!keybindsAssigned)
         {
-            return;
+            shiftRightBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftRightBindDefault);
+            shiftLeftBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftLeftBindDefault);
+            shiftDownBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftDownBindDefault);
+            placeBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), placeBindDefault);
+            rotateBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), rotateBindDefault);
+            storeBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), storeBindDefault);
+            keybindsAssigned = true;
         }
-        shiftRightBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftRightBindDefault);
-        shiftLeftBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftLeftBindDefault);
-        shiftDownBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), shiftDownBindDefault);
-        placeBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), placeBindDefault);
-        rotateBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), rotateBindDefault);
-        storeBind = (KeyCode)System.Enum.Parse(typeof(KeyCode), storeBindDefault);
-        keyBindsAssigned = true;
+        this.setKeyBindText(shiftRightBind.ToString() , buttonTextObjects[0]);
+        this.setKeyBindText(shiftLeftBind.ToString() , buttonTextObjects[1]);
+        this.setKeyBindText(shiftDownBind.ToString() , buttonTextObjects[2]);
+        this.setKeyBindText(placeBind.ToString() , buttonTextObjects[3]);
+        this.setKeyBindText(rotateBind.ToString() , buttonTextObjects[4]);
+        this.setKeyBindText(storeBind.ToString() , buttonTextObjects[5]);
+        
     }
 
     // Update is called once per frame
@@ -122,7 +132,15 @@ public class MainMenu : MonoBehaviour
     {
         if (!isReference && Event.current.isKey)
         {
-            userInput = Event.current.keyCode;
+                userInput = Event.current.keyCode;
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            userInput = KeyCode.LeftShift;
+        }
+        if (Input.GetKey(KeyCode.RightShift))
+        {
+            userInput = KeyCode.RightShift;
         }
     }
 
@@ -133,8 +151,7 @@ public class MainMenu : MonoBehaviour
         userInput = KeyCode.None;
         while (true)
         {
-            Debug.Log(userInput);
-            if (userInput != KeyCode.None)
+            if (userInput != KeyCode.None && userInput != KeyCode.Escape)
             {
                 this.changeKeyBind();
                 break;
@@ -143,6 +160,7 @@ public class MainMenu : MonoBehaviour
             if (time > maxTime)
             {
                 Debug.Log("Took to long");
+                changingKeyBind = false;
                 currentButton.GetComponent<Text>().text = keybindStored;
                 yield break;
             }
@@ -152,6 +170,11 @@ public class MainMenu : MonoBehaviour
 
     public void startChangeKeyBind(GameObject button)
     {
+        if (changingKeyBind)
+        {
+            return;
+        }
+        changingKeyBind = true;
         currentButton = button;
         keybindStored = currentButton.GetComponent<Text>().text;
         currentButton.GetComponent<Text>().text = "-";
@@ -160,7 +183,13 @@ public class MainMenu : MonoBehaviour
 
     public void changeKeyBind()
     {
-        Debug.Log(userInput.ToString());
+        if (userInput == shiftRightBind || userInput == shiftLeftBind || userInput == shiftDownBind || userInput == placeBind || userInput == rotateBind || userInput == storeBind)
+        {
+            Debug.Log("Cannot duplicate keybind");
+            currentButton.GetComponent<Text>().text = keybindStored;
+            changingKeyBind = false;
+            return;
+        }
         switch(currentButton.gameObject.name)
         {
             case "Shift Right Text":
@@ -183,9 +212,63 @@ public class MainMenu : MonoBehaviour
                         break;
             default:
                     Debug.Log("Something went wrong");
+                    changingKeyBind = false;
                     return;
         }
-        currentButton.GetComponent<Text>().text = userInput.ToString();
+        string rawInput = userInput.ToString();
+        string output = "";
+        if (rawInput.Contains("Alpha"))
+        {
+            string[] splitInput = rawInput.Split('a');
+            output = splitInput[1];
+        }
+        else if (rawInput.Length > 1)
+        {
+            output = rawInput;
+            for (int i = 1; i < rawInput.Length; i++)
+            {
+                if (char.IsUpper(rawInput , i))
+                {
+                    output = rawInput.Insert(i , " ");
+                    break;
+                }
+            }
+        }
+        else
+        {
+            output = rawInput;
+        }
+        currentButton.GetComponent<Text>().text = output;
+        changingKeyBind = false;
+    }
+
+    public void setKeyBindText(string input, GameObject button)
+    {
+        string rawInput = input;
+        string output = "";
+        if (rawInput.Contains("Alpha"))
+        {
+            string[] splitInput = rawInput.Split('a');
+            output = splitInput[1];
+        }
+        else if (rawInput.Length > 1)
+        {
+            output = rawInput;
+            for (int i = 1; i < rawInput.Length; i++)
+            {
+                if (char.IsUpper(rawInput , i))
+                {
+                    output = rawInput.Insert(i , " ");
+                    break;
+                }
+            }
+        }
+        else
+        {
+            output = rawInput;
+        }
+        button.GetComponent<Text>().text = output;
+        changingKeyBind = false;
     }
 
 

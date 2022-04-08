@@ -5243,6 +5243,20 @@ MonoBehaviour:
   placeBindDefault: Space
   rotateBindDefault: Z
   storeBindDefault: C
+  buttonTextObjects:
+  - {fileID: 198213437}
+  - {fileID: 991870670}
+  - {fileID: 478863579}
+  - {fileID: 1529988028}
+  - {fileID: 1770217244}
+  - {fileID: 625041526}
+  buttonTextDefault:
+  - Right Arrow
+  - Left Arrow
+  - Down Arrow
+  - Space
+  - Z
+  - C
 --- !u!1 &2062625371
 GameObject:
   m_ObjectHideFlags: 0

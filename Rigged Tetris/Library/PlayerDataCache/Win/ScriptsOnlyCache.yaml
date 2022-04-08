@@ -64,6 +64,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10650}
     - Class: 114
+      Script: {instanceID: 10908}
+    - Class: 114
       Script: {instanceID: 11126}
     - Class: 114
       Script: {instanceID: 11156}
@@ -301,7 +303,7 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
-      Hash: a96adfe0582d59ce58c15ab44015b3e0
+      Hash: cc27b3c81094f3c2ac9a410759fb53ee
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: tileManager
@@ -445,7 +447,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: b01a5dc86313caad07b0c2d95eb9f8b0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainMenu
