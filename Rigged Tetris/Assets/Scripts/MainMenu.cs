@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public bool isReference;
+    public GameObject mainMenu;
+    public GameObject multiplayerMenu;
     public GameObject settingsMenu;
     public int incrementAmount;
     // Timing buttons
@@ -105,6 +107,13 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         
+    }
+
+    //Uses button input to know if the menu is open or not, and then either sets up the multiplayer menu or sets up regular menu
+    public void multiplayerSelected(bool isOpen)
+    {
+        mainMenu.SetActive(isOpen);
+        multiplayerMenu.SetActive(!isOpen);
     }
 
     public void Exit()
